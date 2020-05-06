@@ -6,19 +6,20 @@ io.on('connection', (client) => {
     client.on('disconnect', () => {
         console.log('Usuario desconectado');
     });
-    client.on('enviarMensaje', (mensaje, callback) => {
-        console.log('Cliente:', mensaje);
-        if (mensaje.usuario) {
-            callback({
-                ok: true,
-                mensaje: 'Salió todo bien'
-            });
-        } else {
-            callback({
-                ok: false,
-                mensaje: 'Algo salió mal'
-            });
-        }
+    client.on('enviarMensaje', (data, callback) => {
+        console.log('Cliente:', data);
+        client.broadcast.emit('enviarMensaje', data);
+        // if (data.usuario) {
+        //     callback({
+        //         ok: true,
+        //         data: 'Salió todo bien'
+        //     });
+        // } else {
+        //     callback({
+        //         ok: false,
+        //         data: 'Algo salió mal'
+        //     });
+        // }
     });
     // Enviar evento
     client.emit('enviarMensaje', {
